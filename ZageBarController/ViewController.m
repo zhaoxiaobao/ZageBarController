@@ -76,9 +76,7 @@
     _view.backgroundColor=navigationBarColor;
     _view.delegate=self;
     _view.titles=@[@"菜单一",@"菜单二",@"菜单三",@"菜单四",@"菜单二",@"菜单三",@"菜单四"];
-    [self.view addSubview:_view];
-    
-    
+    [self.view addSubview:_view];    
     
 }
 
@@ -99,11 +97,6 @@
         cell.backgroundColor=[UIColor greenColor];
     }
     
-    
-    //1.$$视图添加控制器出错
-    
-    
-    //    [cell.contentView addSubview:_viewControllers[indexPath.row]];
     cell.contentView.transform = CGAffineTransformMakeRotation(M_PI_2);
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -126,20 +119,16 @@
     CGFloat screenWidth=self.view.frame.size.width;
     CGFloat horizonalOffset = self.tableView.contentOffset.y;
     
-    CGFloat offsetRatio = (NSUInteger)horizonalOffset % (NSUInteger)screenWidth / screenWidth;
-    NSUInteger focusIndex = (horizonalOffset + screenWidth / 2) / screenWidth;
-    
-    
-    NSLog(@"%f",offsetRatio);
-    //添加通知
-    
-    if (offsetRatio==0) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"postIndexUrlNotification"
-                                                            object:self
-                                                          userInfo:@{@"focusIndex":@(focusIndex)}];
-    }
-     
-    [self didScrolldPagAtIndex:focusIndex];
+//    CGFloat offsetRatio = (NSUInteger)horizonalOffset % (NSUInteger)screenWidth / screenWidth;
+//    NSUInteger focusIndex = (horizonalOffset + screenWidth / 2) / screenWidth;
+//    
+//    if (offsetRatio==0) {
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"postIndexUrlNotification"
+//                                                            object:self
+//                                                          userInfo:@{@"focusIndex":@(focusIndex)}];
+//    }
+//     
+//    [self didScrolldPagAtIndex:focusIndex];
 
 
 }
