@@ -9,24 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@protocol pageBarDelegate <NSObject>
-
-@required
-
--(void)didScrolldPage:(NSInteger)index;
-
-@end
-
 @interface ViewController : UIViewController
-
-
-@property(nonatomic,strong)NSArray *viewControllers;
-
-@property(nonatomic,weak)id<pageBarDelegate> delegate;
-
-
-@property (nonatomic, copy) void (^changeIndex)(NSUInteger index);
-
 
 @end
 

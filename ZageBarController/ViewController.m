@@ -13,13 +13,16 @@
 #import "exampleViewController.h"
 
 #import "ViewController.h"
+
+#import "ZageTableView.h"
 #import "ZageBar.h"
 
-
-
-@interface ViewController()<UITableViewDataSource,UITableViewDelegate,selectedBarDelegate>
-
-@property (strong,nonatomic)UITableView *tableView;
+@interface ViewController()<selectedBarDelegate,pageTableViewDelegate>{
+    
+    ZageBar *_view;
+    ZageTableView *_tableView;
+    
+}
 
 
 @end
@@ -36,7 +39,6 @@
 }
 
 - (void)setupNavView{
-    
     UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, screen_width, 64)];
     backView.backgroundColor=navigationBarColor;
     [self.view addSubview:backView];
@@ -47,107 +49,38 @@
     navTitle.textColor=[UIColor whiteColor];
     navTitle.font = [UIFont boldSystemFontOfSize:17.0f];
     [backView addSubview:navTitle];
-    
 }
 
 - (void)setupTableView {
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screen_height - 64, screen_width)];
-    self.tableView.center = CGPointMake(screen_width * 0.5, screen_height * 0.5+(64+40)*0.5);
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.transform = CGAffineTransformMakeRotation(-M_PI_2);
-    self.tableView.showsVerticalScrollIndicator = NO;
-    self.tableView.pagingEnabled = YES;
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.backgroundColor = [UIColor whiteColor];
-    self.tableView.bounces = NO;
-    [self.view addSubview:self.tableView];
+    _view=[[ZageBar alloc] initWithFrame:CGRectMake(0, 64, screen_width, 40) andTitles:@[@"菜单一",@"菜单二",@"菜单三",@"菜单四",@"菜单三",@"菜单四"]];
+    _view.backgroundColor=navigationBarColor;
+    _view.delegate=self;
+    [self.view addSubview:_view];
     
     exampleViewController* VC  = [[exampleViewController alloc] init];
     VC.view.backgroundColor=[UIColor grayColor];
     exampleViewController* VC1  = [[exampleViewController alloc] init];
     VC1.view.backgroundColor=[UIColor yellowColor];
-    _viewControllers=@[VC,VC1];
-    [self.tableView reloadData];
     
-    ZageBar *_view=[[ZageBar alloc] initWithFrame:CGRectMake(0, 64, screen_width, 40)];
-    _view.backgroundColor=navigationBarColor;
-    _view.delegate=self;
-    _view.titles=@[@"菜单一",@"菜单二",@"菜单三",@"菜单四",@"菜单二",@"菜单三",@"菜单四"];
-    [self.view addSubview:_view];    
+    _tableView=[[ZageTableView alloc] initWithFrame:CGRectMake(0, 104, screen_width, screen_height - 104) andControllerViews:@[VC,VC1,VC,VC1,VC,VC1]];
+    _tableView.delegate=self;
+
+    _tableView.backgroundColor=navigationBarColor;
+    [self.view addSubview:_tableView];
     
 }
 
 
-#pragma mark - UITableViewDataSource
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _viewControllers.count;
+#pragma mark - ZageTableViewDelegate
+-(void)didSelectedPageTableView:(NSInteger)index{
+    [_view didChangeZageBar:index];
 }
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIndentifier = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndentifier];
-    }
-    
-    if (indexPath.row%2==0) {
-        cell.backgroundColor=[UIColor greenColor];
-    }
-    
-    cell.contentView.transform = CGAffineTransformMakeRotation(M_PI_2);
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
-    UIViewController *controller = _viewControllers[indexPath.row];
-    controller.view.frame = cell.contentView.bounds;
-    [cell.contentView addSubview:controller.view];
-    return cell;
-}
-
-#pragma mark - UITableViewDelegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Height retrun the width of screen
-    return CGRectGetWidth(self.view.frame);
-}
-
-
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    
-    CGFloat screenWidth=self.view.frame.size.width;
-    CGFloat horizonalOffset = self.tableView.contentOffset.y;
-    
-//    CGFloat offsetRatio = (NSUInteger)horizonalOffset % (NSUInteger)screenWidth / screenWidth;
-//    NSUInteger focusIndex = (horizonalOffset + screenWidth / 2) / screenWidth;
-//    
-//    if (offsetRatio==0) {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"postIndexUrlNotification"
-//                                                            object:self
-//                                                          userInfo:@{@"focusIndex":@(focusIndex)}];
-//    }
-//     
-//    [self didScrolldPagAtIndex:focusIndex];
-
-
-}
-
-- (void)didScrolldPagAtIndex:(NSInteger)index{
-    
-    if ([_delegate respondsToSelector:@selector(didScrolldPage:)]) {
-        [_delegate didScrolldPage:index];
-    }
-    
-}
-
 
 #pragma mark - ZageBarDelegate
 -(void)didSelectedBar:(NSInteger)index{
-    [self.tableView setContentOffset:CGPointMake(0, index*screen_width) animated:YES];
+    [_tableView setContentOffset:CGPointMake(0, index*screen_width) animated:YES];
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

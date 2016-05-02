@@ -9,12 +9,9 @@
 #import <UIKit/UIKit.h>
 
 
-@class ViewController;
-
 @protocol selectedBarDelegate <NSObject>
 
 @required
-
 
 -(void)didSelectedBar:(NSInteger)index;
 
@@ -29,6 +26,11 @@
 
 
 @property(nonatomic,weak)id<selectedBarDelegate> delegate;
+
+
+-(instancetype)initWithFrame:(CGRect)frame andTitles:(NSArray *)array;
+-(void)didChangeZageBar:(NSInteger)index;
+
 
 
 

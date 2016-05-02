@@ -18,6 +18,7 @@
 		3F6B29661CBDEC0E002588B7 /* ZageBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F6B29651CBDEC0E002588B7 /* ZageBar.m */; };
 		3F6B29691CBE0872002588B7 /* exampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F6B29681CBE0872002588B7 /* exampleViewController.m */; };
 		3F6B296C1CBE815E002588B7 /* ZpageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F6B296B1CBE815E002588B7 /* ZpageViewController.m */; };
+		3FCDABF11CD792610069A4A6 /* ZageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FCDABF01CD792610069A4A6 /* ZageTableView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,8 @@
 		3F6B29681CBE0872002588B7 /* exampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = exampleViewController.m; sourceTree = "<group>"; };
 		3F6B296A1CBE815E002588B7 /* ZpageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZpageViewController.h; sourceTree = "<group>"; };
 		3F6B296B1CBE815E002588B7 /* ZpageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZpageViewController.m; sourceTree = "<group>"; };
+		3FCDABEF1CD792610069A4A6 /* ZageTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZageTableView.h; sourceTree = "<group>"; };
+		3FCDABF01CD792610069A4A6 /* ZageTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZageTableView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +153,8 @@
 				3F6B29651CBDEC0E002588B7 /* ZageBar.m */,
 				3F6B296A1CBE815E002588B7 /* ZpageViewController.h */,
 				3F6B296B1CBE815E002588B7 /* ZpageViewController.m */,
+				3FCDABEF1CD792610069A4A6 /* ZageTableView.h */,
+				3FCDABF01CD792610069A4A6 /* ZageTableView.m */,
 			);
 			name = ZageBarController;
 			sourceTree = "<group>";
@@ -301,6 +306,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FCDABF11CD792610069A4A6 /* ZageTableView.m in Sources */,
 				3F6B296C1CBE815E002588B7 /* ZpageViewController.m in Sources */,
 				3F6B29661CBDEC0E002588B7 /* ZageBar.m in Sources */,
 				3F1C6FD41CBD52F9009B2B65 /* ViewController.m in Sources */,

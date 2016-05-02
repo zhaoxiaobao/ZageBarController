@@ -24,8 +24,8 @@
 @implementation ZageBar
 
 
--(instancetype)initWithFrame:(CGRect)frame{
-    
+-(instancetype)initWithFrame:(CGRect)frame andTitles:(NSArray *)array{
+
     if (self = [super initWithFrame:frame]) {
         
         navTabView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, screen_width, 40)];
@@ -34,7 +34,7 @@
         [navTabView setShowsHorizontalScrollIndicator:NO];
         navTabView.backgroundColor=[UIColor colorWithRed:0.969f green:0.973f blue:0.976f alpha:1.00f];
         
-        _titles=@[@"菜单一",@"菜单二",@"菜单三",@"菜单四",@"菜单二",@"菜单三",@"菜单四"];
+        _titles=array;
         
         for (int i=0; i<_titles.count; i++) {
             UIButton *navTabBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -57,23 +57,19 @@
         line.center=CGPointMake(barBtn_width/2,line.center.y);
         [navTabView addSubview:line];
         [self addSubview:navTabView];
-        
-         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ChangeNameNotification:) name:@"postIndexUrlNotification" object:nil];
     }
     return self;
 }
 
 -(void)OnNavTabBtn:(UIButton *)sender{
+    
     for (int i = 0; i < _titles.count; i++) {
         UIButton *btn = (UIButton *)[self viewWithTag:100+i];
         btn.selected = NO;
     }
     
     if (sender.center.x>screen_width/2&&(navTabView.contentSize.width-screen_width/2)>sender.center.x) {
-        
         [navTabView setContentOffset:CGPointMake(sender.center.x-screen_width/2, 0) animated:YES];
-        NSLog(@"%f>%f>%f",navTabView.contentSize.width-screen_width/2,sender.center.x,screen_width/2);
-        //此处有坑,类型转换会出现问题
     }
     
     if (sender.center.x<screen_width/2) {
@@ -83,6 +79,7 @@
     if (sender.center.x>navTabView.contentSize.width-screen_width/2) {
         [navTabView setContentOffset:CGPointMake(navTabView.contentSize.width-screen_width, 0) animated:YES];
     }
+    
     sender.selected = YES;
     [UIView animateWithDuration:0.2 animations:^{
         line.center=CGPointMake(sender.center.x,line.center.y);
@@ -93,33 +90,14 @@
 
 
 - (void)clickedPageTabBarAtIndex:(NSInteger)index{
-    
     if ([_delegate respondsToSelector:@selector(didSelectedBar:)]) {
         [_delegate didSelectedBar:index];
     }
-    
 }
 
-
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    offsetX=scrollView.contentOffset.x;
-    
-}
-
-
--(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-    
-}
-
-
-
-//添加通知
--(void)ChangeNameNotification:(NSNotification*)notification{
-    NSDictionary *dir = [notification userInfo];
-    NSInteger index=[[dir objectForKey:@"focusIndex"] integerValue];
+-(void)didChangeZageBar:(NSInteger)index{
     
     UIButton *sender=(UIButton *)[self viewWithTag:100+index];
-    
     [self OnNavTabBtn:sender];
   
 
